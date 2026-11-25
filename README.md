@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>prisoners registration</title>
+  <style>
+    body{
+          
+      font-family:Arial,sans-serif;
+      background:#eef2f5;
+      margin: 0;
+
+    }
+    header {
+         background:#263746;
+         color:white;
+         text-align:center;
+         padding:20px;
+
+    }
+    .container{
+         width:90%;
+         max-width:1100px;
+         margin:25px auto;
+         background:white;
+         padding:20px;
+         border-radius:10px #ccc;
+
+        
+    }
+
+    h2{
+      color:#263746;
+
+    }
+
+    form{
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:15px;
+
+    }
+      
+        label{
+          font-weight:bold;
+
+        }
+          input,select,textrea{
+            width:100%;
+            padding:10px;
+            margin-top:5px;
+            border-radius:5px;
+            box-sizing:border-box;
+            
+          }
+          button{
+            background: #263746;
+            color:white;
+            padding:12px;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+
+          }
+           button:hover{
+            background:#40596d;
+
+           }
+           .full-width{
+             grid-column:span 2;
+           }
+           .search{
+              margin-top:20px;
+
+           }
+           table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:15px;
+
+
+           }
+           th, td{
+            border:1px solid #ddd;
+            padding:10px;
+            text-align: left;
+
+
+           }
+           th{
+            background:#263746;
+            color:white;
+
+           }
+           tr:nth-child(even){
+            background:#f2f2f2;
+
+           }
+            
+           .delete{
+            background:#c62828;
+            padding:7px;
+
+           }
+
+            footer{
+              text-align:center;
+              padding:15px;
+              color:#555;
+
+            }
+               @media (max-width:700px){
+                form{
+                  grid-template-columns:1fr;
+
+                }
+               }
+               .full-width {
+                grid-column:span 1;
+
+               }
+               .container{
+                width:95%;
+                box-sizing:border-box;
+
+               }
+               table{
+                font-size: 12px;
+                
+               }
+
+  </style>
+  </head>
+  <body>
+    <header>
+      <h1>PRISONER REGISTRATION SYSTEM</h1>
+      <P>Prison Records Management</P>
+
+    </header>
+    <div class="container">
+       
+        <h2>Register New prisoner</h2>
+        <form id="prisonform">
+           
+          <div>
+            <label>FullName</label>
+          <input type="text"id=name
+                placeholder="Enter full name"required>
+                  </div>
+            <div>
+              <label>Age</label>
+              <input type="number"id="age"
+                min="18"max="20"
+                placeholder="Enter age"recqured>
+
+                          </div> 
+               <div>
+                <label>Gender</label>
+                <select id="gender"required>
+                   <option value="">select Gender</option>
+                   <option>male</option>
+                   <option>female</option>
+                   <option>other</option>
+
+                </select>
+                             </div> 
+                   <div>
+                    <label>nationality</label>
+                    <input type="text"id="nationality"
+                       placeholder="Enter nationality"required>
+                   </div>           
+                 <div>
+                   <label>offence</label>
+                   <input type="text"id="offence"
+                     placehoder="Enter offence"required>
+                                    </div>
+                <div>
+                  <label>court name</label>
+                  <input type="text"id="court"
+                     placeholder="Enter court name"requred>
+
+                                  </div>
+                  <div>
+                    <label>sentence</label>
+                    <input type="text"id="sentence"
+                       plceholder="e.g.5years"required>
+                  </div>
+                  <div>
+                      <label>Admission date</label>
+                      <input type="date"id="admission"required>
+                                      </div>
+                <div>
+                  <label>Expected release Date</label>
+                  <input type="date"id="release"required>
+                </div> 
+                <div>
+                  <label>Prison Name</label>
+                  <input type="text" id="prision"
+                   placeholder="Enter prison name"required>
+
+                </div>
+                <div class ="full-width">
+                  <label>AZdditional information</label>
+                  <textarea id="information"
+                      placeholder="Enter additional information"></textarea>
+                                    </div>
+                <div class="full -width">
+                  <button type="submit">
+                    Register Prisoner
+                  </button>
+
+                </div>
+                     </di>               
+                </div>                                                         
+  
+        </form>
+        <h2>Registered Prisoner</h2>
+
+        <input type="text"id="search"class="search"
+            placeholder="search by name or prisoner id">
+          <table>
+             <thead>
+               <tr>
+                  <th> Prisoner iD</th>
+                  <th>Name</th>
+                  <th>age></th>
+                  <th>Gender</th>
+                  <th>offence</th>
+                  <th>sentence</th>
+                  <th>admission</th>
+                  <th>Release</th>
+                  <th>Action</th>
+
+               </tr>
+
+             </thead>
+          </table>
+          </div>
+
+          <footer>
+            <p>Prisoner Registration Management</p>
+
+          </footer>
+          <script>
+               
+               prisonForm=document.getElementByid("prison");
+               prisonTable=document.getElementByid("prisonTable)");
+               search=document.getElementByid("search");
+
+               //load saved records
+               let prisoners=JSON.parse(
+                    localstorage.getItem("prisonRecords"))||II;
+
+                  
+                    function generateID(){
+                      return "PR-"+Date.now();
+
+                    } 
+                    function displayPrisoners(list=prisoners){
+
+                      prisonersTable.innerHTML="";
+
+                      list.forEach(function(prisoner){
+
+                        const row=document.createElement("tr");
+
+                        const values=I
+                          prisoner.id,
+                          prisoner.name,
+                          prisoner.age,
+                          prisoner.gender,
+                          prisoner.offence,
+                          prisoner.sentence,
+                          prisoner.admission,
+                          prisoner.release
+                          I;
+
+                          values.forEach(function(value){
+
+                            const cell=document.createElement("td");
+                            cell.textcontent=value;
+                            row.oppendchild(cell);
+                          });
+      
+
+                           constcell=document.createElement(td);
+
+                           const deleteButton=document.createElement("button");
+                           deleteButon.textcontent="Delete";
+                           deleteButton.classsName="delete";
+
+                           deleteButton.onclick=function(){
+                             deletePprisoner(prisoner.id);
+
+                           };
+                           actioncell.appendchild(deleteButton);
+                           row.appendchild(actioncell);
+
+                           prisonTable.appendchild(row);
+                      });
+
+                    }
+                    prisonForm.addEventListene("submit",function(event){
+                      event.preventDefault();
+
+                      const admissionDate=
+                                document.getElementByid("admission").value;
+
+                         const releaseDate=
+                                document.getElementByid("release").value;
+                         if(releaseDate<admissionDate){
+                             alert("Released date cannot be before admission date.");
+                             return;
+                         } 
+                         
+                         const prisoner={
+
+                          id:generateID(),
+
+                          name:document.getElementByid("name").value,
+                          age:document.getElementByid("age").value,
+                          gender:document.getElementById("gender").value,
+                          nationality:document.getElementById("nationality").value,
+                          offence:document.getElementById("offence").value,                          court:document.getElementById
+                          sentence:document.getElementBid("sentence").value,
+                          admission:admissionDate,
+                          realease:releaseDate,
+                          prison:document.getElementByid("prison").value,
+
+                          information:
+                            document.getElementByid("information").value
+                         
+                        };
+                        prisoners.push(prisoners);
+
+                        localsstorage.setItem(
+                          "prisonersRecords",
+                          JSON.STRINGIFY(PRISONERS)
+                        
+                        );
+                         alert(
+                          "prisoner registered sucessfully!\n"+
+                          "prisoner ID:"+prisoner.id
+                        
+                         );
+                         prisonForm.reset(); 
+                         
+                         displayprisoners();
+
+
+
+
+                    });
+                    searchinput.addEventListener("input",function()){
+
+                      const searchValue=
+                      searchinput.value.tolowercase();
+
+                      const filteredprisoners=prisoners.filter(
+                        function(prisoner ){
+
+                          return prisoner.name.tolowercase()
+                          .includes(searchValue)||
+
+                          prisoner.id.tolowercase()
+                          .includes(searchValue);
+                        }
+                      );
+                      displayPrisoner(filterdPrisoners);
+
+                      function deleteprisoner(id)
+                        const confirmation=confirm(
+                          "are you sure you want to delete this record?"
+
+                        );
+                        if(cornfirmation){
+                          prisoners=prisorners.filter(
+                            function(prisoner){
+                               return prisoner.id!==id;
+                          
+                            }
+                          );
+                          localstorage.setItem(
+                            "prisonRecords",
+                            JSON.stringify(prisoners)
+
+                          );
+                          displayPrisoners();
+
+                        }
+                       }
+                       displayprisoners();
+
+                    </script>
+                    </body>
+                    </html>
